@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacidade BranDoc</title>
+  <meta name="description" content="Política de privacidade do BranDoc.">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<main>
+  <nav><a href="./">Início</a><a href="privacidade.html">Política de privacidade</a></nav>
+  <h1>Política de privacidade</h1>
+  <p class="subtitulo">BranDoc · versão provisória de 30/10/2026</p>
+
+  <p class="aviso">Texto provisório da fase de prova de conceito. Será revisado antes de qualquer uso com dados reais.</p>
+
+  <h2>Onde ficam os dados</h2>
+  <p>Os dados do consultório ficam nos computadores do próprio consultório, num banco cifrado. O BranDoc não tem
+  servidor que receba, guarde ou processe esses dados. O desenvolvedor não tem acesso a eles.</p>
+
+  <h2>Dados do Google que o BranDoc acessa</h2>
+  <p>Se a sincronização pela nuvem for ligada, o BranDoc pede acesso ao Google Drive da conta escolhida com a permissão
+  <code>drive.file</code>. Com ela, o BranDoc:</p>
+  <ul>
+    <li>cria e lê apenas os arquivos que ele mesmo criou, na pasta <strong>Brandoc</strong>;</li>
+    <li>não vê, não lê e não altera nenhum outro arquivo do Drive;</li>
+    <li>consulta o espaço livre da conta, para avisar antes que o Drive encha.</li>
+  </ul>
+  <p>Os arquivos enviados são cifrados e assinados no computador antes do envio. No Drive ficam apenas arquivos
+  ilegíveis sem as chaves do consultório, que nunca saem dos computadores dele.</p>
+
+  <h2>Credenciais</h2>
+  <p>O token de acesso ao Google fica guardado no computador, protegido pelo sistema operacional. Ele não é enviado a
+  ninguém além do próprio Google.</p>
+
+  <h2>Compartilhamento</h2>
+  <p>O BranDoc não vende, não compartilha e não transfere dados a terceiros, nem usa os dados para publicidade ou para
+  treinar modelos de inteligência artificial.</p>
+  <p>O uso e a transferência, pelo BranDoc, de informações recebidas das APIs do Google obedecem à
+  <a href="https://developers.google.com/terms/api-services-user-data-policy">Política de Dados do Usuário dos Serviços
+  de API do Google</a>, incluindo os requisitos de Uso Limitado.</p>
+
+  <h2>Como revogar o acesso</h2>
+  <p>O acesso pode ser desligado no próprio BranDoc ou a qualquer momento em
+  <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. A pasta Brandoc pode ser
+  apagada do Drive normalmente.</p>
+
+  <h2>Contato</h2>
+  <p>Dúvidas sobre esta política: <a href="https://github.com/rodzzgo/brandoc-site/issues">abra um pedido aqui</a>.</p>
+
+  <footer>BranDoc · <a href="./">início</a></footer>
+</main>
+</body>
+</html>
