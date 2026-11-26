@@ -1,0 +1,23 @@
+// Site do Brandoc (Cloudflare Pages, envio direto). Nada disto existe ainda na conta: tudo roda local.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "brandoc-site",
+  "pages_build_output_dir": "publico",
+  "compatibility_date": "2026-10-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "brandoc-lista",
+      // Preenchido quando o banco for criado na conta (o id não é segredo).
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "ratelimits": [
+    { "name": "LIMITE_POR_IP", "namespace_id": "12001", "simple": { "limit": 5, "period": 60 } }
+  ],
+  "vars": {
+    // Chave pública de teste do Turnstile (sempre passa); a de produção entra na publicação.
+    "TURNSTILE_SITEKEY": "1x00000000000000000000AA"
+  }
+}

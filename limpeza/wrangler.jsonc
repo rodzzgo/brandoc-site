@@ -1,0 +1,14 @@
+// Limpeza diária da lista de espera (mesmo banco do site). Nada disto existe ainda na conta.
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "brandoc-lista-limpeza",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "d1_databases": [
+    { "binding": "DB", "database_name": "brandoc-lista", "database_id": "00000000-0000-0000-0000-000000000000" }
+  ],
+  "triggers": { "crons": ["23 4 * * *"] },
+  // Data do lançamento (AAAA-MM-DD). Vazia: nada é apagado. A lista inteira sai 12 meses depois dela.
+  "vars": { "LANCAMENTO": "" }
+}

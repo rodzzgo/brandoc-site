@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /sair/
+
+Sitemap: https://brandoc.com.br/sitemap.xml
