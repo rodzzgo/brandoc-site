@@ -1,0 +1,2 @@
+# Copie para .dev.vars (fora do Git). Chave secreta de TESTE do Turnstile: sempre passa.
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA

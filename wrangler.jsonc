@@ -1,0 +1,20 @@
+// Site do Brandoc (Cloudflare Pages, envio direto). Nada disto existe ainda na conta: tudo roda local.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "brandoc-site",
+  "pages_build_output_dir": "publico",
+  "compatibility_date": "2026-10-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "brandoc-lista",
+      // Criado em 27/11/2026 (o id não é segredo).
+      "database_id": "568bc97f-c223-420d-997d-6810706a0d45",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // A Pages não aceita o binding de rate limit: o limite por IP mora no Worker brandoc-lista-limpeza (RPC).
+  "services": [
+    { "binding": "LIMITE_POR_IP", "service": "brandoc-lista-limpeza", "entrypoint": "Limitador" }
+  ]
+}
