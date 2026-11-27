@@ -3,7 +3,7 @@
 
 export interface Env {
   DB: D1Database;
-  LIMITE_POR_IP: RateLimit;
+  LIMITE_POR_IP: Pick<RateLimit, "limit">; // em produção, RPC para o Limitador do Worker brandoc-lista-limpeza
   TURNSTILE_SECRET: string;
 }
 

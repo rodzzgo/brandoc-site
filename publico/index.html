@@ -221,8 +221,8 @@
     <p class="lista-texto">O Brandoc está em piloto num consultório. Deixe seu e-mail e a sua especialidade: avisamos quando abrir, e a sua resposta ajuda a decidir o que construímos primeiro. Haverá um plano gratuito para experimentar.</p>
     <p class="requisito">Para Windows 10 e 11.</p>
 
-    <!-- data-sitekey: chave de TESTE do Turnstile (sempre passa). A de produção entra na publicação. -->
-    <form class="formulario" method="post" action="/api/lista" data-lista data-sitekey="1x00000000000000000000AA" novalidate>
+    <!-- data-sitekey: chave pública do Turnstile (só vale em brandoc.com.br). Para testar local, use a de teste 1x00000000000000000000AA. -->
+    <form class="formulario" method="post" action="/api/lista" data-lista data-sitekey="0x4AAAAAAGU_yNHyP7aHL7VP" novalidate>
       <div class="campo">
         <label for="email">Seu e-mail</label>
         <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required placeholder="nome@consultorio.com.br">
