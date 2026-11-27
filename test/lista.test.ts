@@ -39,9 +39,10 @@ describe("inscrição", () => {
     const [l] = await linhas();
     expect(l.email).toBe("ana@exemplo.com.br");
     expect(l.especialidade).toBe("clinica-medica");
+    expect(l.usa_mac).toBe(0); // caixa opcional, desmarcada
     expect(l.consentimento_versao).toBe(VERSAO_DO_CONSENTIMENTO);
     expect(Date.parse(l.criada_em)).toBeGreaterThan(Date.now() - 60_000);
-    expect(Object.keys(l).sort()).toEqual(["consentimento_em", "consentimento_versao", "criada_em", "email", "especialidade", "id"]);
+    expect(Object.keys(l).sort()).toEqual(["consentimento_em", "consentimento_versao", "criada_em", "email", "especialidade", "id", "usa_mac"]);
     // Só o hash do código fica no banco.
     const codigo = saida.split("/").pop()!;
     const s = await env.DB.prepare("SELECT hash FROM saida").first<{ hash: string }>();
@@ -51,15 +52,21 @@ describe("inscrição", () => {
 
   it("e-mail repetido não duplica, responde igual e dá um link novo; o primeiro continua valendo", async () => {
     const a = await (await inscrever(pedido(valido), env, verificador)).json<{ saida: string }>();
-    const r = await inscrever(pedido({ ...valido, email: "ana@exemplo.com.br", especialidade: "pediatria" }), env, verificador);
+    const r = await inscrever(pedido({ ...valido, email: "ana@exemplo.com.br", especialidade: "pediatria", usa_mac: "sim" }), env, verificador);
     expect(r.status).toBe(200);
     const b = await r.json<{ saida: string }>();
     expect(b.saida).not.toBe(a.saida);
     expect(await linhas()).toHaveLength(1);
     expect((await linhas())[0].especialidade).toBe("clinica-medica");
+    expect((await linhas())[0].usa_mac).toBe(0);
     const fim = await sair(new Request(a.saida, { method: "POST", headers: { origin: SITE } }), env);
     expect(fim.status).toBe(200);
     expect(await linhas()).toHaveLength(0);
+  });
+
+  it("com a caixa \"Uso Mac\" marcada grava usa_mac = 1", async () => {
+    expect((await inscrever(pedido({ ...valido, usa_mac: "sim" }), env, verificador)).status).toBe(200);
+    expect((await linhas())[0].usa_mac).toBe(1);
   });
 
   it("sem consentimento não grava", async () => {

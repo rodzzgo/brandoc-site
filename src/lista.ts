@@ -52,6 +52,7 @@ export async function inscrever(pedido: Request, env: Env, buscar: typeof fetch 
   if (email.length > 254 || !EMAIL.test(email)) return json({ erro: "email" }, 400);
   if (!ESPECIALIDADES.includes(especialidade)) return json({ erro: "especialidade" }, 400);
   if (campos.get("consentimento") !== "sim") return json({ erro: "consentimento" }, 400);
+  const usaMac = campos.get("usa_mac") === "sim" ? 1 : 0;
 
   const token = campos.get("cf-turnstile-response") ?? "";
   if (!token || !(await turnstileValido(token, env.TURNSTILE_SECRET, buscar))) return json({ erro: "verificacao" }, 403);
@@ -61,9 +62,9 @@ export async function inscrever(pedido: Request, env: Env, buscar: typeof fetch 
   // Idempotente: o e-mail repetido não muda a inscrição e responde igual (não revela se já estava na lista).
   await env.DB.batch([
     env.DB.prepare(
-      `INSERT INTO inscricao (email, especialidade, criada_em, consentimento_versao, consentimento_em)
-       VALUES (?1, ?2, ?3, ?4, ?3) ON CONFLICT(email) DO NOTHING`,
-    ).bind(email, especialidade, agora, VERSAO_DO_CONSENTIMENTO),
+      `INSERT INTO inscricao (email, especialidade, criada_em, consentimento_versao, consentimento_em, usa_mac)
+       VALUES (?1, ?2, ?3, ?4, ?3, ?5) ON CONFLICT(email) DO NOTHING`,
+    ).bind(email, especialidade, agora, VERSAO_DO_CONSENTIMENTO, usaMac),
     env.DB.prepare("INSERT INTO saida (hash, inscricao) SELECT ?1, id FROM inscricao WHERE email = ?2")
       .bind(await sha256(codigo), email),
   ]);
@@ -119,11 +120,13 @@ function pagina(status: number, titulo: string, corpo: string): Response {
 <link rel="stylesheet" href="/estilo.css">
 </head>
 <body>
+<!--email_off-->
 <main class="documento">
 <p><a href="/">Brandoc</a></p>
 <h1>${titulo}</h1>
 ${corpo}
 </main>
+<!--/email_off-->
 </body>
 </html>`;
   return new Response(html, {

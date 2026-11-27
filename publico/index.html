@@ -29,6 +29,7 @@
 <script src="/site.js" defer></script>
 </head>
 <body>
+<!--email_off--><!-- sem isto a ofuscação de e-mail da Cloudflare troca os endereços por [email protected] (a CSP bloqueia o script dela) -->
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="topo">
@@ -215,7 +216,7 @@
   <div class="faixa faixa-estreita lista">
     <h2 id="lista-titulo">Quer experimentar quando sair?</h2>
     <p class="lista-texto">O Brandoc está em piloto num consultório. Deixe seu e-mail e a sua especialidade: avisamos quando abrir, e a sua resposta ajuda a decidir o que construímos primeiro. Haverá um plano gratuito para experimentar.</p>
-    <p class="requisito">Para Windows 10 e 11.</p>
+    <p class="requisito">Para Windows 10 e 11. Versão para Mac em estudo.</p>
 
     <!-- data-sitekey: chave pública do Turnstile (só vale em brandoc.com.br). Para testar local, use a de teste 1x00000000000000000000AA. -->
     <form class="formulario" method="post" action="/api/lista" data-lista data-sitekey="0x4AAAAAAGU_yNHyP7aHL7VP" novalidate>
@@ -244,6 +245,10 @@
           <option value="fisioterapia">Fisioterapia</option>
           <option value="outra-profissao">Outra profissão</option>
         </select>
+      </div>
+      <div class="consentimento opcao">
+        <input id="usa-mac" name="usa_mac" type="checkbox" value="sim">
+        <label for="usa-mac">Uso Mac no consultório</label>
       </div>
       <div class="consentimento">
         <input id="consentimento" name="consentimento" type="checkbox" value="sim" required>
@@ -280,5 +285,6 @@
     </div>
   </div>
 </footer>
+<!--/email_off-->
 </body>
 </html>
