@@ -6,7 +6,8 @@
     "local": "wrangler d1 migrations apply brandoc-lista --local && wrangler pages dev",
     "verificar": "tsc --noEmit",
     "testar": "vitest run",
-    "conferir-injecao": "sh tools/conferir-injecao.sh"
+    "conferir-injecao": "sh tools/conferir-injecao.sh",
+    "publicar": "sh tools/versionar.sh && wrangler pages deploy --branch main && sh tools/conferir-injecao.sh"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "1.5.1",

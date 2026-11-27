@@ -117,7 +117,7 @@ function pagina(status: number, titulo: string, corpo: string): Response {
 <title>${titulo} · Brandoc</title>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/marca/simbolo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/estilo.css">
+<link rel="stylesheet" href="/estilo.css?v=90b3e2a315">
 </head>
 <body>
 <!--email_off-->
