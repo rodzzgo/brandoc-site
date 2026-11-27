@@ -8,7 +8,7 @@ export interface Env {
 }
 
 /** Data da política de privacidade aceita (a "Atualizada em" de privacidade.html). */
-export const VERSAO_DO_CONSENTIMENTO = "2026-11-26";
+export const VERSAO_DO_CONSENTIMENTO = "2026-11-27";
 
 export const ESPECIALIDADES = [
   "ginecologia-obstetricia", "clinica-medica", "medicina-familia", "pediatria", "cardiologia", "dermatologia",
