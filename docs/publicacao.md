@@ -54,3 +54,35 @@ Autorizada no recado de 27/11/2026, 00:32. Tudo no plano gratuito; nada pediu ca
 - Os domínios ficaram em "CNAME record not set": os primeiros registros não eram CNAME para `brandoc-site.pages.dev`;
   depois de apagados, a raiz e o `www` ficaram alguns minutos sem registro (530 e sem resolução). Refeitos à mão, a
   Pages validou em seguida. `c.`, `atualizacao.` e os MX não foram afetados em nenhum momento.
+
+## Regra: nenhum script da Cloudflare injetado (recado de 27/11/2026, 01:41)
+
+A cada publicação de Worker ou Pages, rode `npm run conferir-injecao` (`tools/conferir-injecao.sh`). Ele pede as
+páginas como navegador (a injeção só acontece para navegador) e falha se achar `cloudflareinsights`, `/cdn-cgi/…js`,
+`rocket-loader` ou `email-decode` no HTML servido do site e da página de confirmação (`c.`).
+
+- **Web Analytics automático da zona** (achado na publicação): injetava o beacon em todas as páginas HTML da zona,
+  inclusive `c.`. A CSP bloqueava. Desligado pelo Rodrigo.
+- **Ofuscação de e-mail da zona** (Scrape Shield, achado pelo teste em 27/11): trocava os endereços por
+  "[email protected]" e injetava `email-decode.min.js`, que a CSP bloqueia; no ar, os e-mails da política apareciam
+  ilegíveis. Corrigido no site com `<!--email_off-->` em volta do corpo das páginas (também na página de saída gerada
+  pela função), sem mexer na zona. A configuração da zona continua ligada; páginas novas com e-mail precisam do mesmo
+  marcador (o teste pega).
+
+## Migração 0002 e publicação de 27/11/2026, 01:41
+
+| | Antes | Depois |
+| --- | --- | --- |
+| `inscricao` | 6 colunas, 0 linhas | + `usa_mac INTEGER NOT NULL DEFAULT 0 CHECK (0, 1)`, 0 linhas |
+| Pages | `8f5bb191` | `37225b68` (commit `52187ff`): requisito com "Versão para Mac em estudo", caixa "Uso Mac", política e versão do consentimento de 27/11, `email_off` |
+| Conferência | | `conferir-injecao` ok nas 3 páginas; Lighthouse 100 nas quatro categorias (celular e computador); axe sem violações nos dois temas; `c.` e `atualizacao.` 200 |
+
+## Contagem da lista (só números, sem e-mail)
+
+```sh
+npx wrangler d1 execute brandoc-lista --remote --command "
+  SELECT especialidade, count(*) AS inscricoes, sum(usa_mac) AS usam_mac
+  FROM inscricao GROUP BY especialidade
+  UNION ALL SELECT 'TOTAL', count(*), sum(usa_mac) FROM inscricao
+  ORDER BY inscricoes DESC"
+```
